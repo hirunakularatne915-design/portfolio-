@@ -21,7 +21,20 @@ export interface PortfolioItem {
   priority: number;
 }
 
-export const PORTFOLIO_ITEMS: PortfolioItem[] = rawItems as PortfolioItem[];
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+function withBasePath(src?: string): string {
+  if (!src) return '';
+  if (!BASE_PATH || !src.startsWith('/') || src.startsWith(`${BASE_PATH}/`)) return src;
+  return `${BASE_PATH}${src}`;
+}
+
+export const PORTFOLIO_ITEMS: PortfolioItem[] = (rawItems as PortfolioItem[]).map((item) => ({
+  ...item,
+  thumbSrc: withBasePath(item.thumbSrc),
+  fullSrc: withBasePath(item.fullSrc),
+  previewVideoSrc: item.previewVideoSrc ? withBasePath(item.previewVideoSrc) : undefined,
+}));
 
 export const CATEGORIES = [
   { id: 'all', label: 'All Works' },
