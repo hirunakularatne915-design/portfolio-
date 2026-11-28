@@ -61,7 +61,7 @@ export function WorkModal({ item, onClose, onSelect, onFilterClient, onPrev, onN
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-xl border shadow-2xl lg:flex-row"
+        className="relative flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-y-auto lg:overflow-hidden rounded-xl border shadow-2xl lg:flex-row"
         style={{
           backgroundColor: 'var(--bg-canvas)',
           borderColor: 'var(--border-hairline)',
@@ -69,19 +69,36 @@ export function WorkModal({ item, onClose, onSelect, onFilterClient, onPrev, onN
       >
         {/* Top Mobile Bar */}
         <div
-          className="flex items-center justify-between border-b px-4 py-3 lg:hidden"
-          style={{ borderColor: 'var(--border-hairline)' }}
+          className="sticky top-0 z-20 flex shrink-0 items-center justify-between gap-3 border-b px-4 py-3 lg:hidden"
+          style={{
+            backgroundColor: 'var(--bg-canvas)',
+            borderColor: 'var(--border-hairline)',
+          }}
         >
-          <span className="truncate text-xs font-medium" style={{ fontFamily: 'var(--font-mono)' }}>
-            {getClientLabel(item.client)}
-          </span>
-          <button type="button" onClick={onClose} aria-label="Close viewer" className="p-1 cursor-pointer">
-            <CloseIcon />
+          <div className="min-w-0 flex-1">
+            <p
+              className="truncate text-[10px] uppercase tracking-wider"
+              style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
+            >
+              {getClientLabel(item.client)}
+            </p>
+            <p className="truncate text-sm font-medium leading-tight" style={{ fontFamily: 'var(--font-serif)' }}>
+              {item.title}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close viewer"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border cursor-pointer"
+            style={{ borderColor: 'var(--border-hairline)' }}
+          >
+            <CloseIcon className="w-4 h-4" />
           </button>
         </div>
 
         {/* Left Stage: Uncropped High-Res Artwork OR Full Audio Video */}
-        <div className="relative flex min-h-[46dvh] flex-1 items-center justify-center bg-black/95 p-3 sm:p-6">
+        <div className="relative flex shrink-0 items-center justify-center overflow-hidden bg-black/95 p-3 sm:p-6 lg:min-h-[46dvh] lg:flex-1 lg:shrink">
           <button
             type="button"
             onClick={onPrev}
@@ -100,14 +117,14 @@ export function WorkModal({ item, onClose, onSelect, onFilterClient, onPrev, onN
               controls
               autoPlay
               playsInline
-              className="max-h-[75dvh] w-auto max-w-full rounded"
+              className="max-h-[48dvh] sm:max-h-[58dvh] lg:max-h-[75dvh] w-auto max-w-full object-contain rounded"
             />
           ) : (
             <img
               key={item.id}
               src={item.fullSrc}
               alt={item.title}
-              className="max-h-[78dvh] w-auto max-w-full object-contain rounded"
+              className="max-h-[52dvh] sm:max-h-[62dvh] lg:max-h-[78dvh] w-auto max-w-full object-contain rounded"
             />
           )}
 
@@ -123,7 +140,7 @@ export function WorkModal({ item, onClose, onSelect, onFilterClient, onPrev, onN
 
         {/* Right Editorial Metadata & Cross-Folder Client Drawer */}
         <div
-          className="flex w-full flex-col justify-between overflow-y-auto p-5 sm:p-6 lg:w-[340px] lg:border-l"
+          className="flex w-full flex-col justify-between p-5 sm:p-6 lg:w-[340px] lg:overflow-y-auto lg:border-l"
           style={{ borderColor: 'var(--border-hairline)' }}
         >
           <div>
