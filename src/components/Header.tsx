@@ -6,7 +6,7 @@ import { ARTIST_INFO } from '@/data/portfolio';
 import { SunMoonIcon } from './Icons';
 
 export function Header() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
